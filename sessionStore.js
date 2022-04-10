@@ -17,7 +17,6 @@ class InMemorySessionStore extends SessionStore {
     uid = '4pRoeGAr0wchUHqMu7j290ZCeAp1';
     this.sessions.forEach((session) => {
       if (session.userId === uid) {
-        console.log('Found session', session);
         return session;
       }
     });

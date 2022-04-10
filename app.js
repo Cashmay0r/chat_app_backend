@@ -3,13 +3,11 @@ const app = express();
 import http from 'http';
 const server = http.createServer(app);
 import {Server} from 'socket.io';
-const io = new Server(server, {cors: {origin: 'http://localhost:8000'}});
+const io = new Server(server, {cors: {origin: ['https://chat-app-front-end-pi.vercel.app', 'http://localhost:8000', 'http://localhost:4173', 'https://localhost:8000']}});
 import cookieParser from 'cookie-parser';
 import indexRouter from './routes/index.js';
 import cors from 'cors';
 import crypto from 'crypto';
-
-const port = 3000;
 
 const randomId = () => crypto.randomBytes(8).toString('hex');
 
@@ -40,7 +38,6 @@ io.use((socket, next) => {
     }
   }
   const username = socket.handshake.auth.user.email;
-  console.log('Looking for username: ', socket.handshake.auth.user);
 
   if (!username) {
     console.log('Invalid name');
@@ -100,7 +97,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on('private message', ({content, to}) => {
-    console.log(socket);
     const message = {
       content,
       from: socket.userId,
@@ -125,9 +121,9 @@ io.on('connection', (socket) => {
     }
   });
 });
-
-server.listen(port, () => {
-  console.log(`Listening on http://localhost:${port}`);
+const PORT = process.env.PORT || 8080;
+server.listen(PORT, () => {
+  console.log(`Listening on http://localhost:${PORT}`);
 });
 
 export default app;

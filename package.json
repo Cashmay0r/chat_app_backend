@@ -4,7 +4,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js",
+    "serve": "nodemon app.js",
+    "deploy": "gcloud run deploy"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
